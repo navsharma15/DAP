@@ -119,7 +119,9 @@ const Hero = () => {
             <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
           </motion.a>
           <motion.a
-            href="/resume.pdf"
+            href="resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.97 }}
             className="group px-8 py-4 bg-white/5 border border-white/15 text-white rounded-2xl font-semibold flex items-center gap-2 hover:bg-white/10 hover:border-white/30 backdrop-blur-sm transition-all duration-300"
