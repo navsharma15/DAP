@@ -7,7 +7,7 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
+  color-scheme: light;
   
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -19,14 +19,9 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #0B1220;
-  color: #FFFFFF;
+  background-color: #4f633c;
+  color: #000000;
   transition: background-color 0.3s, color 0.3s;
-}
-
-.dark body {
-  background-color: #0F172A;
-  color: #F8FAFC;
 }
 
 html {
@@ -39,26 +34,16 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #0B1220;
-}
-
-.dark ::-webkit-scrollbar-track {
-  background-color: #0F172A;
+  background-color: #4f633c;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-accent/20 rounded-full hover:bg-accent/40 transition-colors;
+  @apply bg-[#94a679]/50 rounded-full hover:bg-[#94a679]/80 transition-colors;
 }
 
 /* Glassmorphism utility */
   .glass {
-    background-color: rgba(15, 23, 42, 0.4);
+    background-color: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-  }
-
-  .dark .glass {
-    background-color: rgba(15, 23, 42, 0.6);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05);
   }

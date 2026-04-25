@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Download, ChevronRight, Github, Linkedin, Twitter, ArrowDown } from 'lucide-react';
-
+import { Download, ChevronRight, Github, Linkedin, Twitter } from 'lucide-react';
 
 /* ── Hero ──────────────────────────────────────────── */
 const Hero = () => {
@@ -33,19 +32,19 @@ const Hero = () => {
       icon: Github,
       href: 'https://github.com/navsharma15',
       label: 'GitHub',
-      hover: 'hover:text-white hover:bg-white/10 hover:border-white/30',
+      hover: 'hover:text-black hover:bg-[#94a679]/30 hover:border-[#94a679]/50',
     },
     {
       icon: Linkedin,
       href: 'https://www.linkedin.com/in/nav-sharma/',
       label: 'LinkedIn',
-      hover: 'hover:text-[#0A66C2] hover:bg-[#0A66C2]/20 hover:border-[#0A66C2]/50',
+      hover: 'hover:text-[#0A66C2] hover:bg-[#0A66C2]/20 hover:border-[#0A66C2]/40',
     },
     {
       icon: Twitter,
       href: '#',
       label: 'Twitter',
-      hover: 'hover:text-[#1DA1F2] hover:bg-[#1DA1F2]/20 hover:border-[#1DA1F2]/50',
+      hover: 'hover:text-[#1DA1F2] hover:bg-[#1DA1F2]/20 hover:border-[#1DA1F2]/40',
     },
   ];
 
@@ -63,22 +62,13 @@ const Hero = () => {
       >
         {/* Heading */}
         <motion.div variants={itemVariants}>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold text-white leading-[1.08] tracking-tight mb-4">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold text-black leading-[1.08] tracking-tight mb-4">
             Hi, I'm{' '}
-            <span
-              style={{
-                background:
-                  'linear-gradient(135deg, #FFD700 0%, #FFC200 30%, #FFE566 60%, #FFD700 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                filter: 'drop-shadow(0 0 24px rgba(255,215,0,0.45))',
-              }}
-            >
+            <span className="text-black">
               Nav Sharma
             </span>
           </h1>
-          <h2 className="text-2xl md:text-4xl font-bold text-white/40 tracking-widest uppercase mb-8">
+          <h2 className="text-2xl md:text-4xl font-bold text-black tracking-widest uppercase mb-8">
             Data Analyst
           </h2>
         </motion.div>
@@ -88,20 +78,19 @@ const Hero = () => {
           variants={itemVariants}
           className="w-16 h-0.5 mx-auto mb-8 rounded-full"
           style={{
-            background: 'linear-gradient(90deg, #FFD700, #FFC200)',
-            boxShadow: '0 0 12px 2px rgba(255,215,0,0.4)',
+            background: 'linear-gradient(90deg, #C8BA95, #94a679)',
           }}
         />
 
         {/* Description */}
         <motion.p
           variants={itemVariants}
-          className="text-lg md:text-xl text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed"
+          className="text-lg md:text-xl text-black mb-10 max-w-2xl mx-auto leading-relaxed"
         >
           Turning complex datasets into clear, actionable insights. Specializing in{' '}
-          <span className="text-white/80">predictive modeling</span>,{' '}
-          <span className="text-white/80">statistical analysis</span>, and{' '}
-          <span className="text-white/80">data visualization</span>.
+          <span className="text-black font-medium">predictive modeling</span>,{' '}
+          <span className="text-black font-medium">statistical analysis</span>, and{' '}
+          <span className="text-black font-medium">data visualization</span>.
         </motion.p>
 
         {/* CTA Buttons */}
@@ -113,7 +102,7 @@ const Hero = () => {
             href="#projects"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.97 }}
-            className="group px-8 py-4 bg-white text-[#0B1220] rounded-2xl font-bold flex items-center gap-2 shadow-xl shadow-white/10 hover:shadow-white/20 transition-all duration-300"
+            className="group px-8 py-4 bg-[#94a679] text-[#4f633c] rounded-2xl font-bold flex items-center gap-2 shadow-xl shadow-[#94a679]/20 hover:shadow-[#94a679]/40 transition-all duration-300"
           >
             View My Work
             <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
@@ -124,7 +113,7 @@ const Hero = () => {
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.97 }}
-            className="group px-8 py-4 bg-white/5 border border-white/15 text-white rounded-2xl font-semibold flex items-center gap-2 hover:bg-white/10 hover:border-white/30 backdrop-blur-sm transition-all duration-300"
+            className="group px-8 py-4 bg-[#C8BA95]/10 border border-[#C8BA95]/20 text-black rounded-2xl font-semibold flex items-center gap-2 hover:bg-[#C8BA95]/20 hover:border-[#C8BA95]/40 backdrop-blur-sm transition-all duration-300"
           >
             <Download size={18} className="group-hover:-translate-y-0.5 transition-transform" />
             Download Resume
@@ -145,46 +134,22 @@ const Hero = () => {
               aria-label={label}
               whileHover={{ scale: 1.15, y: -3 }}
               whileTap={{ scale: 0.95 }}
-              className={`w-11 h-11 rounded-full flex items-center justify-center text-white/50 bg-white/5 border border-white/10 ${hover} transition-all duration-200`}
+              className={`w-11 h-11 rounded-full flex items-center justify-center text-black bg-[#94a679]/10 border border-[#94a679]/20 ${hover} transition-all duration-200`}
             >
               <Icon size={18} />
             </motion.a>
           ))}
 
-          <span className="w-px h-6 bg-white/15 mx-2" />
+          <span className="w-px h-6 bg-[#C8BA95]/20 mx-2" />
 
           {stats.map(({ value, label }) => (
             <div key={label} className="text-center px-3">
-              <p
-                className="text-xl font-bold"
-                style={{
-                  background: 'linear-gradient(135deg, #FFD700, #FFC200)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                }}
-              >
+              <p className="text-xl font-bold text-black">
                 {value}
               </p>
-              <p className="text-[10px] text-white/40 uppercase tracking-widest">{label}</p>
+              <p className="text-[10px] text-black/70 uppercase tracking-widest">{label}</p>
             </div>
           ))}
-        </motion.div>
-      </motion.div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.6, duration: 0.8 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/30"
-      >
-        <span className="text-xs tracking-widest uppercase font-medium">Scroll</span>
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <ArrowDown size={16} />
         </motion.div>
       </motion.div>
     </section>

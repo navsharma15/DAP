@@ -9,98 +9,135 @@ const ParticleBackground = () => {
     const ctx = canvas.getContext('2d');
     let animationFrameId;
 
-    /* ── Mouse ── */
-    const mouse = { x: null, y: null, radius: 180 };
-    const handleMouseMove = (e) => { mouse.x = e.clientX; mouse.y = e.clientY; };
-    const handleMouseLeave = () => { mouse.x = null; mouse.y = null; };
+    const mouse = {
+      x: null,
+      y: null,
+      radius: 250 // Radius of cursor lens effect
+    };
+
+    const handleMouseMove = (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    };
+
+    const handleMouseLeave = () => {
+      mouse.x = null;
+      mouse.y = null;
+    };
+
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseleave', handleMouseLeave);
 
-    /* ── Star particles ── */
-    let stars = [];
+    let particles = [];
+    let cols = 0;
+    let rows = 0;
+    const spacing = 35; // Denser grid for better lens effect
 
-    class Star {
-      constructor(x, y, size, baseOpacity) {
-        this.baseX = x; this.baseY = y;
-        this.x = x;    this.y = y;
-        this.size = size;
-        this.baseOpacity = baseOpacity;
-        this.opacity = baseOpacity;
-        this.angle = Math.random() * Math.PI * 2;
-        this.twinkleSpeed = Math.random() * 0.05 + 0.02;
+    class Particle {
+      constructor(x, y) {
+        this.baseX = x;
+        this.baseY = y;
+        this.currentX = x;
+        this.currentY = y;
+        
+        // Very small default dots
+        this.baseRadius = 0.8;
+        this.radius = this.baseRadius;
+        this.targetRadius = this.baseRadius;
+        
+        // Faint base opacity
+        this.baseOpacity = 0.25;
+        this.opacity = this.baseOpacity;
+        this.targetOpacity = this.baseOpacity;
       }
 
       update() {
-        /* Twinkle */
-        this.angle += this.twinkleSpeed;
-        this.opacity = this.baseOpacity + Math.sin(this.angle) * 0.2;
-
-        let fx = 0, fy = 0;
-
-        /* Mouse repulsion */
+        // Unique Cursor Effect: 3D Lens / Bubble
         if (mouse.x !== null) {
-          const dx = mouse.x - this.x;
-          const dy = mouse.y - this.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < mouse.radius && dist > 0) {
-            const f = (mouse.radius - dist) / mouse.radius;
-            fx -= (dx / dist) * f * 3;
-            fy -= (dy / dist) * f * 3;
+          const dx = this.baseX - mouse.x;
+          const dy = this.baseY - mouse.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < mouse.radius) {
+            const force = (mouse.radius - distance) / mouse.radius;
+            // Sine wave curve creates a rounded "bubble" distortion
+            const bubble = Math.sin(force * Math.PI); 
+            
+            // Dots scale up and brighten
+            this.targetRadius = this.baseRadius + bubble * 2.5; 
+            this.targetOpacity = this.baseOpacity + bubble * 0.75;
+            
+            // Push dots gently outward to complete the 3D sphere illusion
+            this.targetX = this.baseX + (dx / distance) * bubble * 15;
+            this.targetY = this.baseY + (dy / distance) * bubble * 15;
+          } else {
+            this.targetRadius = this.baseRadius;
+            this.targetOpacity = this.baseOpacity;
+            this.targetX = this.baseX;
+            this.targetY = this.baseY;
           }
+        } else {
+          this.targetRadius = this.baseRadius;
+          this.targetOpacity = this.baseOpacity;
+          this.targetX = this.baseX;
+          this.targetY = this.baseY;
         }
 
-        /* Apply forces */
-        this.x += fx;
-        this.y += fy;
-
-        /* Elastic return to base */
-        this.x += (this.baseX - this.x) * 0.07;
-        this.y += (this.baseY - this.y) * 0.07;
+        // Smooth spring animations toward targets
+        this.radius += (this.targetRadius - this.radius) * 0.15;
+        this.opacity += (this.targetOpacity - this.opacity) * 0.15;
+        this.currentX += (this.targetX - this.currentX) * 0.15;
+        this.currentY += (this.targetY - this.currentY) * 0.15;
       }
 
-      draw() {
+      draw(ctx) {
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,255,255,${Math.max(0, Math.min(1, this.opacity))})`;
-        ctx.shadowBlur = this.size * 2.5;
-        ctx.shadowColor = 'white';
+        ctx.arc(this.currentX, this.currentY, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(148, 166, 121, ${this.opacity})`;
         ctx.fill();
-        ctx.shadowBlur = 0;
       }
     }
 
-    const initStars = () => {
-      stars = [];
-      const count = Math.floor((canvas.width * canvas.height) / 2000);
-      for (let i = 0; i < count; i++) {
-        stars.push(new Star(
-          Math.random() * canvas.width,
-          Math.random() * canvas.height,
-          Math.random() * 1.2 + 0.4,
-          Math.random() * 0.5 + 0.2,
-        ));
+    const initParticles = () => {
+      particles = [];
+      cols = Math.ceil(canvas.width / spacing) + 1;
+      rows = Math.ceil(canvas.height / spacing) + 1;
+      
+      // Center the grid perfectly
+      const offsetX = (canvas.width - (cols - 1) * spacing) / 2;
+      const offsetY = (canvas.height - (rows - 1) * spacing) / 2;
+
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          particles.push(new Particle(offsetX + c * spacing, offsetY + r * spacing));
+        }
       }
     };
 
-    /* ── Main loop ── */
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      initParticles();
+    };
+
+    window.addEventListener('resize', resize);
+    resize(); // Initialize on mount
+
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      stars.forEach(s => { s.update(); s.draw(); });
+
+      // Draw ONLY dots (no lines)
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw(ctx);
+      }
     };
 
-    const handleResize = () => {
-      canvas.width  = window.innerWidth;
-      canvas.height = window.innerHeight;
-      initStars();
-    };
-    window.addEventListener('resize', handleResize);
-
-    handleResize();
     animate();
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('resize', resize);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseleave', handleMouseLeave);
       cancelAnimationFrame(animationFrameId);
@@ -110,7 +147,7 @@ const ParticleBackground = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed top-0 left-0 w-full h-full -z-10 bg-gradient-to-br from-[#0B1220] to-[#0F172A]"
+      className="fixed top-0 left-0 w-full h-full -z-10 bg-[#4f633c]"
     />
   );
 };

@@ -37,16 +37,16 @@ const Navbar = () => {
     <nav
       className={`fixed w-full z-50 transition-all duration-500 ${
         scrolled
-          ? 'py-3 bg-[#0B1220]/80 backdrop-blur-xl border-b border-white/10 shadow-lg shadow-black/20'
+          ? 'py-3 bg-[#4f633c]/80 backdrop-blur-xl border-b border-[#94a679]/20 shadow-lg shadow-black/20'
           : 'py-5 bg-transparent'
       }`}
     >
       <div className="max-w-6xl mx-auto px-6 flex justify-between items-center">
         {/* Logo */}
         <a href="#home" className="flex items-center gap-2 group">
-          <span className="w-2.5 h-2.5 rounded-full bg-indigo-400 group-hover:bg-white transition-colors duration-300 shadow-lg shadow-indigo-400/50" />
-          <span className="text-xl font-bold text-white tracking-tight">
-            DA<span className="text-indigo-400">.</span>Portfolio
+          <span className="w-2.5 h-2.5 rounded-full bg-[#C8BA95] group-hover:bg-[#E3D8BC] transition-colors duration-300 shadow-lg shadow-[#C8BA95]/50" />
+          <span className="text-xl font-bold text-black tracking-tight">
+            DA<span className="text-black">.</span>Portfolio
           </span>
         </a>
 
@@ -61,7 +61,7 @@ const Navbar = () => {
             >
               <span
                 className={`transition-colors duration-200 ${
-                  activeLink === link.id ? 'text-white' : 'text-white/50 hover:text-white/90'
+                  activeLink === link.id ? 'text-black' : 'text-black hover:text-black'
                 }`}
               >
                 {link.name}
@@ -69,7 +69,7 @@ const Navbar = () => {
               {activeLink === link.id && (
                 <motion.span
                   layoutId="navbar-underline"
-                  className="absolute bottom-0 left-4 right-4 h-0.5 bg-indigo-400 rounded-full"
+                  className="absolute bottom-0 left-4 right-4 h-0.5 bg-[#C8BA95] rounded-full"
                   transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                 />
               )}
@@ -83,7 +83,7 @@ const Navbar = () => {
             href="#contact"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-5 py-2 text-sm font-semibold text-white border border-white/20 rounded-full hover:bg-white/10 hover:border-white/40 transition-all duration-200 backdrop-blur-sm"
+            className="px-5 py-2 text-sm font-semibold text-black border border-[#94a679]/40 rounded-full hover:bg-[#94a679]/20 hover:border-[#C8BA95]/60 transition-all duration-200 backdrop-blur-sm"
           >
             Hire Me
           </motion.a>
@@ -92,7 +92,7 @@ const Navbar = () => {
         {/* Mobile Hamburger */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden p-2 rounded-lg text-white/80 hover:text-white hover:bg-white/10 transition-all"
+          className="md:hidden p-2 rounded-lg text-black hover:text-black hover:bg-[#94a679]/20 transition-all"
         >
           {isOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
@@ -106,7 +106,7 @@ const Navbar = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden mx-4 mt-2 rounded-2xl overflow-hidden bg-[#0F172A]/90 backdrop-blur-xl border border-white/10"
+            className="md:hidden mx-4 mt-2 rounded-2xl overflow-hidden bg-[#4f633c]/95 backdrop-blur-xl border border-[#94a679]/20 shadow-xl"
           >
             <div className="px-4 py-4 space-y-1">
               {navLinks.map((link) => (
@@ -116,8 +116,8 @@ const Navbar = () => {
                   onClick={() => { setIsOpen(false); setActiveLink(link.id); }}
                   className={`block px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
                     activeLink === link.id
-                      ? 'bg-white/10 text-white'
-                      : 'text-white/60 hover:text-white hover:bg-white/5'
+                      ? 'bg-[#94a679]/20 text-black'
+                      : 'text-black hover:text-black hover:bg-[#94a679]/10'
                   }`}
                 >
                   {link.name}
@@ -126,7 +126,7 @@ const Navbar = () => {
               <a
                 href="#contact"
                 onClick={() => setIsOpen(false)}
-                className="block mt-2 px-4 py-2.5 text-center text-sm font-semibold text-white border border-white/20 rounded-xl hover:bg-white/10 transition-all"
+                className="block mt-2 px-4 py-2.5 text-center text-sm font-semibold text-black border border-[#94a679]/40 rounded-xl hover:bg-[#94a679]/20 transition-all"
               >
                 Hire Me
               </a>
